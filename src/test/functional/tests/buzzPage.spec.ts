@@ -41,7 +41,7 @@ test.describe('Share, edit and delete post', () => {
   });
 
   test('Post should be shared', async ({ page }) => {
-    const randomTitle = generateRandomString();
+    const randomTitle = generateRandomString(8);
     await buzzPage.navigateToSubPage(SubPage.BUZZ);
     await buzzPage.sharePost(filePath, randomTitle);
     await page.reload();
@@ -50,7 +50,7 @@ test.describe('Share, edit and delete post', () => {
   });
 
   test('Post should be edited', async ({ page }) => {
-    const randomTitle = generateRandomString();
+    const randomTitle = generateRandomString(8);
     await buzzPage.navigateToSubPage(SubPage.BUZZ);
     await buzzPage.sharePost(filePath, randomTitle);
     await page.reload();
@@ -137,13 +137,13 @@ test.describe('User should be able to write and share post', () => {
   });
 
   test('User should be able to share post of other', async ({ page }) => {
-    const randomTitle = generateRandomString();
-    const randomTitleForSharedPost = generateRandomString()
+    const randomTitle = generateRandomString(8);
+    const randomTitleForSharedPost = generateRandomString(8)
     await buzzPage.sharePost(filePath, randomTitle);
     await page.reload();
     await buzzPage.resharePostOfOther(randomTitleForSharedPost)
     const element = await buzzPage.locateElementWithDynamicText(randomTitleForSharedPost)
     await expect(element).toBeVisible();
-    await expect(buzzPage.resharedTtileText).toHaveText(randomTitle)
+    await expect(buzzPage.resharedTitleText).toHaveText(randomTitle)
   });
 });
