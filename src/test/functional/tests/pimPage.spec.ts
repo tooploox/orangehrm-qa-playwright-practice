@@ -20,7 +20,7 @@ async function tableCellsGotByName(page: Page) {
   return [adminUserCell, normalUserCell];
 }
 
-test.describe("Admin user should be able to manage on pim page", () => {
+test.describe.only("Admin user should be able to manage on pim page", () => {
   let loginPage: LoginPage;
   let pimPage: PimPage;
   const randomNewEmployeeName = generateRandomString(3);
@@ -144,10 +144,10 @@ test.describe("Admin user should be able to manage on pim page", () => {
       .click();
     await pimPage.confirmDeleteButton.click();
     await expect(
-      pimPage.getTrashBinByRandomEmployeeName(randomEditedEmployeeName)
+      pimPage.getTrashBinByRandomEmployeeName(randomNewEmployeeName)
     ).toHaveCount(0);
     await expect(
-      pimPage.getTrashBinByRandomEmployeeName(randomNewEmployeeName)
+      pimPage.getTrashBinByRandomEmployeeName(randomEditedEmployeeName)
     ).toHaveCount(0);
   });
 

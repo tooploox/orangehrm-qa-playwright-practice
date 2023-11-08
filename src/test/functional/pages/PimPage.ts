@@ -4,48 +4,48 @@ import { Locator } from "@playwright/test";
 
 export class PimPage extends BasePage {
   protected readonly sharePhotosButton = this.page.getByRole("button", {
-    name: "Share Photos",
+    name: Labels.SHARE_PHOTOS,
   });
   protected readonly addEmployeeButton = this.page.getByRole("button", {
-    name: "Add",
+    name: Labels.ADD,
   });
-  protected readonly firstNameInput = this.page.getByPlaceholder("First Name");
+  protected readonly firstNameInput = this.page.getByPlaceholder(Labels.FIRST_NAME);
   protected readonly middleNameInput =
-    this.page.getByPlaceholder("Middle Name");
-  protected readonly lastNameInput = this.page.getByPlaceholder("Last Name");
+    this.page.getByPlaceholder(Labels.MIDDLE_NAME);
+  protected readonly lastNameInput = this.page.getByPlaceholder(Labels.LAST_NAME);
   protected readonly saveUserButton = this.page.getByRole("button", {
-    name: "Save",
+    name: Labels.SAVE,
   });
   public readonly confirmDeleteButton = this.page.getByRole("button", {
-    name: "Yes, Delete",
+    name: Labels.YES_DELETE,
   });
   public readonly multiplyDelete = this.page.getByRole("button", {
-    name: "Delete Selected",
+    name: Labels.DELETE_SELECTED,
   });
   protected readonly employeeNameInput = this.page
-    .getByPlaceholder("Type for hints...")
+    .getByPlaceholder(Labels.TYPE_FOR_HINTS)
     .first();
   protected readonly employeeIdInput = this.page.getByRole("textbox").nth(2);
   protected readonly searchEmployeeButton = this.page.getByRole("button", {
-    name: "Search",
+    name: Labels.SEARCH,
   });
   public readonly resetButton = this.page.getByRole("button", {
-    name: "Reset",
+    name: Labels.RESET,
   });
 
-  public getLocatorByRandomNewEmplyeeName(randomNewEmpoyeeName: string):Locator {
-    return this.page.locator(`.oxd-table-cell:has(:text("${randomNewEmpoyeeName}"))`);
-  } 
+  // public getLocatorByRandomNewEmplyeeName(randomNewEmpoyeeName: string):Locator {
+  //   return this.page.locator(`.oxd-table-cell:has(:text("${randomNewEmpoyeeName}"))`);
+  // } this also works, let's keep it in codebase for poor times
   
   
 
-  // public getLocatorByRandomNewEmplyeeName(
-  //   randomNewEmployeeName: string
-  // ): Locator {
-  //   return this.page.getByText(randomNewEmployeeName)
-  // }
-  // let's keep it in codebase for poor times
-
+  public getLocatorByRandomNewEmplyeeName(
+    randomNewEmployeeName: string
+  ): Locator {
+    return this.page
+    .getByRole('cell', {name: randomNewEmployeeName})
+    console.log(randomNewEmployeeName)
+  }
 
   // public getTrashBinByRandomEmployeeName(randomNewEmployeeName: string):Locator {
   //   return this.page.locator(`.oxd-table-card:has(:text("${randomNewEmployeeName}")) .oxd-icon.bi-trash`);

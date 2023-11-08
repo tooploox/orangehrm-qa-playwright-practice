@@ -68,7 +68,7 @@ export class BasePage {
     return this.page
       .getByRole('heading', { name: heading })
       .locator('xpath=..')
-      .getByRole('button', { name: 'Save' })
+      .getByRole('button', { name: Labels.SAVE })
   }
 
   protected getSpanByText(text: string): Locator {
@@ -84,15 +84,15 @@ export class BasePage {
   }
 
   protected getUsernameInput(): Locator {  
-    return this.page.getByPlaceholder('Username');
+    return this.page.getByPlaceholder(Labels.USERNAME);
   }
 
   protected getPasswordInput(): Locator {  
-    return this.page.getByPlaceholder('Password');
+    return this.page.getByPlaceholder(Labels.PASSWORD);
   }
   
   protected getLoginButton(): Locator {
-    return this.page.getByRole('button', { name: 'Login' });
+    return this.page.getByRole('button', { name: Labels.LOGIN });
   }
 
   async loginUser(mail: string, password: string): Promise<void> {
@@ -103,7 +103,7 @@ export class BasePage {
 
 public async logOut(){
   await this.getSpanByText('Admin User').click()
-  await this.getMenuItemByText('Logout').click()
+  await this.getMenuItemByText(Labels.LOGOUT).click()
 }
 
 
@@ -129,5 +129,18 @@ public async logOut(){
     USERNAME = 'Username',
     PASSWORD = 'Password',
     CONFIRM_PASSWORD = 'Confirm Password',
-    LOGIN_DETAILS = 'Create Login Details'
+    LOGIN_DETAILS = 'Create Login Details',
+    SHARE_PHOTOS = 'Share Photos',
+    ADD = 'Add',
+    FIRST_NAME = 'First Name',
+    LAST_NAME = 'Last Name',
+    MIDDLE_NAME = 'Middle Name',
+    SAVE = 'Save',
+    YES_DELETE  = 'Yes, Delete',
+    DELETE_SELECTED = 'Delete Selected',
+    TYPE_FOR_HINTS = 'Type for hints...',
+    SEARCH = "Search",
+    RESET = "Reset",
+    LOGIN = 'Login',
+    LOGOUT = 'Logout',
   }
