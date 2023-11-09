@@ -45,8 +45,7 @@ test.describe('Share, edit and delete post', () => {
     await buzzPage.navigateToSubPage(SubPage.BUZZ);
     await buzzPage.sharePost(filePath, randomTitle);
     await page.reload();
-    const element = await buzzPage.locateElementWithDynamicText(randomTitle)
-    await expect(element).toBeVisible();
+    await expect(buzzPage.getPostWithRandomTitleAndPhoto(randomTitle)).toBeVisible();
   });
 
   test('Post should be edited', async ({ page }) => {
@@ -55,8 +54,7 @@ test.describe('Share, edit and delete post', () => {
     await buzzPage.sharePost(filePath, randomTitle);
     await page.reload();
     await buzzPage.editTheNewestPost(expectedPostTextAfterEdition);
-    const element = await buzzPage.locateElementWithDynamicText(expectedPostTextAfterEdition)
-    await expect(element).toBeVisible();
+    await expect(buzzPage.getPostWithRandomTitleAndPhoto(expectedPostTextAfterEdition)).toBeVisible();
   });
 });
 
@@ -130,20 +128,17 @@ test.describe('User should be able to write and share post', () => {
 
   test('User shoud be able to write simple post', async ({ page }) => {
     await buzzPage.sendSimplePost(simplePostMessage)
-    console.log(simplePostMessage)
     await page.reload();
-    const element = await buzzPage.locateElementWithDynamicText(simplePostMessage)
-    await expect(element).toBeVisible();
+    await expect(buzzPage.getPostWithRandomTitleWithoutPhoto(simplePostMessage)).toBeVisible();
   });
 
-  test('User should be able to share post of other', async ({ page }) => {
+  test.only('User should be able to share post of other', async ({ page }) => {
     const randomTitle = generateRandomString(8);
     const randomTitleForSharedPost = generateRandomString(8)
     await buzzPage.sharePost(filePath, randomTitle);
     await page.reload();
-    await buzzPage.resharePostOfOther(randomTitleForSharedPost)
-    const element = await buzzPage.locateElementWithDynamicText(randomTitleForSharedPost)
-    await expect(element).toBeVisible();
-    await expect(buzzPage.resharedTitleText).toHaveText(randomTitle)
+    await buzzPage.resharePostOfOther(randomTitle, randomTitleForSharedPost)
+    await expect(buzzPage.getPostWithRandomTitleAndPhoto(randomTitleForSharedPost)).toBeVisible();
+    await expect(buzzPage.getOriginalTextOfReSharedPostWithPhoto(randomTitle)).toBeVisible();
   });
 });

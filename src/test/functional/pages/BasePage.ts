@@ -131,6 +131,7 @@ public async logOut(){
     CONFIRM_PASSWORD = 'Confirm Password',
     LOGIN_DETAILS = 'Create Login Details',
     SHARE_PHOTOS = 'Share Photos',
+    SHARE_VIDEOS = 'Share Videos',
     ADD = 'Add',
     FIRST_NAME = 'First Name',
     LAST_NAME = 'Last Name',
@@ -143,4 +144,14 @@ public async logOut(){
     RESET = "Reset",
     LOGIN = 'Login',
     LOGOUT = 'Logout',
+    SHARE = 'Share',
+    DELETE_POST = 'Delete Post',
+    EDIT_POST = 'Edit Post',
+    POST = 'Post',
+    WHAT_ON_YOUR_MIND = 'What\'s on your mind?',
+    MOST_LIKED_POST =' Most Liked Posts ',
+    MOST_COMMENTED_POST = ' Most Commented Posts ',
+    WRITE_YOUR_COMMENT = 'Write your comment...',
+    SHARE_VIDEO = 'Share Video',
+    PASTE_VIDEO_URL = 'Paste Video URL'
   }

@@ -44,7 +44,6 @@ export class PimPage extends BasePage {
   ): Locator {
     return this.page
     .getByRole('cell', {name: randomNewEmployeeName})
-    console.log(randomNewEmployeeName)
   }
 
   // public getTrashBinByRandomEmployeeName(randomNewEmployeeName: string):Locator {
