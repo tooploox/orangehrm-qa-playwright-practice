@@ -2,10 +2,8 @@ import { LoginPage } from '../pages/LoginPage';
 import { test, expect } from '@playwright/test';
 import { normalUserTestData, adminUserTestData } from '../data';
 
-
 const adminName = 'Admin User'
 const userName = 'Normal User'
-
 
 test.describe('Login Page', () => {
   let loginPage: LoginPage;

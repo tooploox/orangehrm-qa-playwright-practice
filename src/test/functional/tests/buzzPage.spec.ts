@@ -34,7 +34,7 @@ test.describe('Share, edit and delete post', () => {
 
   test.afterEach(async ({ page }) => {
     buzzPage = new BuzzPage(page);
-    const lpicture = await buzzPage.photoBody.count()
+    const lpicture = await buzzPage.getThreeDotsButton().count()
     for (let i = 0; i < lpicture; i++) {
       await buzzPage.deleteTheNewestPost(false);
     }
@@ -43,7 +43,7 @@ test.describe('Share, edit and delete post', () => {
   test('Post should be shared', async ({ page }) => {
     const randomTitle = generateRandomString(8);
     await buzzPage.navigateToSubPage(SubPage.BUZZ);
-    await buzzPage.sharePost(filePath, randomTitle);
+    await buzzPage.sharePostWithPhoto(filePath, randomTitle);
     await page.reload();
     await expect(buzzPage.getPostWithRandomTitleAndPhoto(randomTitle)).toBeVisible();
   });
@@ -51,7 +51,7 @@ test.describe('Share, edit and delete post', () => {
   test('Post should be edited', async ({ page }) => {
     const randomTitle = generateRandomString(8);
     await buzzPage.navigateToSubPage(SubPage.BUZZ);
-    await buzzPage.sharePost(filePath, randomTitle);
+    await buzzPage.sharePostWithPhoto(filePath, randomTitle);
     await page.reload();
     await buzzPage.editTheNewestPost(expectedPostTextAfterEdition);
     await expect(buzzPage.getPostWithRandomTitleAndPhoto(expectedPostTextAfterEdition)).toBeVisible();
@@ -79,26 +79,26 @@ test.describe('Most liked and most commented post', () => {
 
   test.afterEach(async ({ page }) => {
     buzzPage = new BuzzPage(page);
-    const lvideo = await buzzPage.videoBody.count()
+    const lvideo = await buzzPage.getThreeDotsButton().count()
     for (let i = 0; i < lvideo; i++) {
       await buzzPage.deleteTheNewestPost(true);
     }
   });
 
   test('User should upload 3 videos and verify if most liked is on 1st position in most liked tab', async ({ page }) => {
-    await buzzPage.heartButton.nth(1).click();
-    await buzzPage.mostLikedTab.click();
-    await expect(buzzPage.textPostBody.first()).toHaveText(mostLiked);
-    await expect(buzzPage.videoBody).toHaveCount(3);
+    await buzzPage.getHeartButtonByRandomTitle(mostLiked).click()
+    await buzzPage.getMostLikedTab().click();
+    await expect(buzzPage.getTextPostBody().first()).toHaveText(mostLiked);
+    await expect(buzzPage.getVideoBody()).toHaveCount(3);
   });
 
   test('User should upload 3 videos and verify if most commented is on 1st position in most commented tab', async ({ page }) => {
-    await buzzPage.commentPostCloudButtom.nth(0).click();
-    await buzzPage.commentInput.nth(0).type(newComment);
+    await buzzPage.getCommentPostButtonByRandomTitle(mostCommented).click()
+    await buzzPage.getCommentInput(mostCommented).type(newComment);
     await page.keyboard.press('Enter');
-    await buzzPage.mostCommentedTab.click();
-    await expect(buzzPage.textPostBody.first()).toHaveText(mostCommented);
-    await expect(buzzPage.videoBody).toHaveCount(3);
+    await buzzPage.getMostCommentedTab().click();
+    await expect(buzzPage.getTextPostBody().first()).toHaveText(mostCommented);
+    await expect(buzzPage.getVideoBody()).toHaveCount(3);
   });
 });
 
@@ -120,7 +120,7 @@ test.describe('User should be able to write and share post', () => {
 
   test.afterEach(async ({ page }) => {
     buzzPage = new BuzzPage(page);
-    const lvideo = await buzzPage.threeDotsIcon.count()
+    const lvideo = await buzzPage.getThreeDotsButton().count()
     for (let i = 0; i < lvideo; i++) {
       await buzzPage.deleteTheNewestPost(false);
     }
@@ -132,12 +132,12 @@ test.describe('User should be able to write and share post', () => {
     await expect(buzzPage.getPostWithRandomTitleWithoutPhoto(simplePostMessage)).toBeVisible();
   });
 
-  test.only('User should be able to share post of other', async ({ page }) => {
+  test('User should be able to share post of other', async ({ page }) => {
     const randomTitle = generateRandomString(8);
     const randomTitleForSharedPost = generateRandomString(8)
-    await buzzPage.sharePost(filePath, randomTitle);
+    await buzzPage.sharePostWithPhoto(filePath, randomTitle);
     await page.reload();
-    await buzzPage.resharePostOfOther(randomTitle, randomTitleForSharedPost)
+    await buzzPage.reshareOtherPost(randomTitle, randomTitleForSharedPost)
     await expect(buzzPage.getPostWithRandomTitleAndPhoto(randomTitleForSharedPost)).toBeVisible();
     await expect(buzzPage.getOriginalTextOfReSharedPostWithPhoto(randomTitle)).toBeVisible();
   });

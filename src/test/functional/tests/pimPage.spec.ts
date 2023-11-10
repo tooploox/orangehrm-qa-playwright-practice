@@ -8,10 +8,10 @@ import { newEmployeeTestData } from "../data";
 
 async function tableCellsGotByName(page: Page) {
   const pimPage = new PimPage(page);
-  const adminUserCell = await pimPage.getLocatorByRandomNewEmplyeeName(
+  const adminUserCell = await pimPage.getCellByRandomNewEmplyeeName(
     adminUserTestData.userName.slice(0, adminUserTestData.userName.indexOf(" "))
   );
-  const normalUserCell = await pimPage.getLocatorByRandomNewEmplyeeName(
+  const normalUserCell = await pimPage.getCellByRandomNewEmplyeeName(
     normalUserTestData.userName.slice(
       0,
       normalUserTestData.userName.indexOf(" ")
@@ -48,7 +48,7 @@ test.describe("Admin user should be able to manage on pim page", () => {
     await pimPage.navigateToSubPage(SubPage.PIM);
     await page.waitForLoadState("networkidle");
     await expect(
-      pimPage.getLocatorByRandomNewEmplyeeName(randomNewEmployeeName)
+      pimPage.getCellByRandomNewEmplyeeName(randomNewEmployeeName)
     ).toBeVisible();
   });
 
@@ -66,7 +66,7 @@ test.describe("Admin user should be able to manage on pim page", () => {
     await pimPage.navigateToSubPage(SubPage.PIM);
     await page.waitForLoadState("networkidle");
     await expect(
-      pimPage.getLocatorByRandomNewEmplyeeName(randomEditedEmployeeName)
+      pimPage.getCellByRandomNewEmplyeeName(randomEditedEmployeeName)
     ).toBeVisible();
   });
 
@@ -85,8 +85,8 @@ test.describe("Admin user should be able to manage on pim page", () => {
     await pimPage
       .getCheckIconByRandomEmployeeName(randomNameForMultipluDelete2)
       .click();
-    await pimPage.multiplyDelete.click();
-    await pimPage.confirmDeleteButton.click();
+    await pimPage.getMultiplyDeleteButton().click();
+    await pimPage.getConfirmDeleteButton().click();
     await expect(pimPage.getCheckIconByRandomEmployeeName(randomNameForMultiplyDelete1)).toHaveCount(0);
     await expect(pimPage.getCheckIconByRandomEmployeeName(randomNameForMultipluDelete2)).toHaveCount(0);
   });
@@ -105,7 +105,7 @@ test.describe("Admin user should be able to manage on pim page", () => {
     await page.waitForLoadState('networkidle')
     await expect.soft((tableCells[0])).toBeVisible();
     await expect.soft((tableCells[1])).not.toBeVisible()
-    await pimPage.resetButton.click()
+    await pimPage.getResetButton().click()
     await page.waitForLoadState('networkidle')
     await expect((tableCells[0])).toBeVisible();
     await expect((tableCells[1])).toBeVisible()
@@ -125,7 +125,7 @@ test.describe("Admin user should be able to manage on pim page", () => {
     await page.waitForLoadState('networkidle')
     await expect.soft((tableCells[0])).toBeVisible();
     await expect.soft((tableCells[1])).not.toBeVisible()
-    await pimPage.resetButton.click()
+    await pimPage.getResetButton().click()
     await page.waitForLoadState('networkidle')
     await expect((tableCells[0])).toBeVisible();
     await expect((tableCells[1])).toBeVisible()
@@ -138,11 +138,11 @@ test.describe("Admin user should be able to manage on pim page", () => {
     await pimPage
       .getTrashBinByRandomEmployeeName(randomNewEmployeeName)
       .click();
-    await pimPage.confirmDeleteButton.click();
+    await pimPage.getConfirmDeleteButton().click();
     await pimPage
       .getTrashBinByRandomEmployeeName(randomEditedEmployeeName)
       .click();
-    await pimPage.confirmDeleteButton.click();
+    await pimPage.getConfirmDeleteButton().click();
     await expect(
       pimPage.getTrashBinByRandomEmployeeName(randomNewEmployeeName)
     ).toHaveCount(0);
@@ -157,7 +157,7 @@ test.describe("Admin user should be able to manage on pim page", () => {
     await pimPage.addEmployee(firstName, true);
     await pimPage.navigateToSubPage(SubPage.PIM);
     await page.waitForLoadState('networkidle')
-    await expect((pimPage.getLocatorByRandomNewEmplyeeName(randomNewEmployeeName))).toBeVisible();
+    await expect((pimPage.getCellByRandomNewEmplyeeName(randomNewEmployeeName))).toBeVisible();
   });
 
   test('Admin user should add employee from sub page "Add employee" with loging details', async ({ page }) => {

@@ -1,34 +1,105 @@
 import { BasePage, Labels } from './BasePage';
 import { Locator } from "@playwright/test";
 export class BuzzPage extends BasePage {
-    protected readonly sharePhotosButton = this.page.getByRole('button', { name: Labels.SHARE_PHOTOS })
-    protected readonly fileInputButton = this.page.locator('input[type="file"]');
-    public readonly sharingSubmitButton = this.page.getByRole('button', { name: Labels.SHARE, exact: true })
-    public readonly threeDotsIcon = this.page.getByRole('button', { name: '' });
-    protected readonly deletePostParagraphButton = this.page.getByText(Labels.DELETE_POST); 
-    protected readonly editPostParagraphButton = this.page.getByText(Labels.EDIT_POST);
-    protected readonly confirmDeleteButton = this.page.getByRole('button', { name: Labels.YES_DELETE})
-    protected readonly inpostEditTextField = this.page.getByRole('dialog').locator('textarea')
-    protected readonly confirmEditedPostButton = this.page.getByRole('dialog').getByRole('button', { name: Labels.POST })
-    protected readonly shareVideoButton = this.page.getByRole('button', { name: Labels.SHARE_VIDEO })
-    protected readonly pasteUrlTextarea = this.page.getByPlaceholder(Labels.PASTE_VIDEO_URL)
-    protected readonly shareVideoParagraph = this.page.getByRole('dialog').getByPlaceholder(Labels.WHAT_ON_YOUR_MIND)
-    public readonly heartButton = this.page.locator('#heart-svg')
-    public readonly mostLikedTab = this.page.getByRole('button', { name: Labels.MOST_LIKED_POST })
-    public readonly mostCommentedTab = this.page.getByRole('button', { name: Labels.MOST_COMMENTED_POST})
-    public readonly textPostBody = this.page.locator('.orangehrm-buzz-post-body-text')
-    public readonly commentPostCloudButtom = this.page.getByRole('button', { name: '' })
-    public readonly commentInput = this.page.getByPlaceholder(Labels.WRITE_YOUR_COMMENT)
-    public readonly photoBody = this.page.locator('.orangehrm-buzz-photos')
-    public readonly videoBody = this.page.locator('.orangehrm-buzz-video')
-    protected readonly simplePostMessageInput = this.page.getByPlaceholder(Labels.WHAT_ON_YOUR_MIND)
-    protected readonly submitSimplePostButton = this.page.getByRole('button', { name: Labels.POST, exact: true })
+ 
+    public getMostLikedTab(
+      ): Locator {
+        return this.page.getByRole('button', { name: Labels.MOST_LIKED_POST })
+      }
+    
+    public getMostCommentedTab(
+      ): Locator {
+        return this.page.getByRole('button', { name: Labels.MOST_COMMENTED_POST})
+      }
+    
+    public getTextPostBody(
+      ): Locator {
+        return this.page.locator('.orangehrm-buzz-post-body-text')
+      }
+    
+    public getVideoBody(
+      ): Locator {
+        return this.page.locator('.orangehrm-buzz-video')
+      }
 
+    protected getSubmitSimplePostButton(
+      ): Locator {
+        return this.page.getByRole('button', { name: Labels.POST, exact: true })
+      }
 
-    // public getPostWithRandomTitleAndPhoto(randomTitle: string): Locator {
-    //   return this.page.locator(`.orangehrm-buzz-post-body:has(:text('${randomTitle}')):has(.orangehrm-buzz-photos) .orangehrm-buzz-post-body-text`);
-    // }
-    // this also works, let's keep it in codebase for poor times
+    protected getPostMessageInput(
+      ): Locator {
+        return this.page.getByPlaceholder(Labels.WHAT_ON_YOUR_MIND)
+      }
+    
+    protected getShareVideoTitle(
+      ): Locator {
+        return this.page.getByRole('dialog').getByPlaceholder(Labels.WHAT_ON_YOUR_MIND)
+      }
+    
+    protected getVideoUrlTextarea(
+      ): Locator {
+        return this.page.getByPlaceholder(Labels.PASTE_VIDEO_URL)
+      }
+    
+    protected getShareVideoButton(
+      ): Locator {
+        return this.page.getByRole('button', { name: Labels.SHARE_VIDEO })
+      }
+    
+    protected getConfirmEditedPostButton(
+      ): Locator {
+        return this.page.getByRole('dialog').getByRole('button', { name: Labels.POST })
+      }
+    
+    protected getPostEditTextarea(
+      ): Locator {
+        return this.page.getByRole('dialog').locator('textarea')
+      }
+    
+    protected getConfirmDeleteButton(
+      ): Locator {
+        return this.page.getByRole('button', { name: Labels.YES_DELETE});
+      }
+    
+    protected getEditButton(
+      ): Locator {
+        return this.page.getByText(Labels.EDIT_POST);
+      }
+
+    protected getDletePostButton(
+      ): Locator {
+        return this.page.getByText(Labels.DELETE_POST);
+      }
+
+    public getThreeDotsButton(
+      ): Locator {
+        return this.page.getByRole('button', { name: '' });
+      }
+
+    public getSharingSubmitButton(
+      ): Locator {
+        return this.page.getByRole('button', { name: Labels.SHARE, exact: true })
+      }
+
+    protected getFileInputButton(
+      ): Locator {
+        return this.page.locator('input[type="file"]')
+      }
+
+    protected getSharePhotoButton(
+    ): Locator {
+      return this.page.getByRole('button', { name: Labels.SHARE_PHOTOS })
+    }
+
+    public getCommentInput(
+      randomTitle: string
+    ): Locator {
+      return this.page
+        .locator('.oxd-sheet')
+        .filter({hasText:randomTitle})
+        .getByPlaceholder(Labels.WRITE_YOUR_COMMENT)
+    }
 
     public getResharedPostButtonByRandomTitle(
       randomTitle: string
@@ -39,6 +110,23 @@ export class BuzzPage extends BasePage {
         .locator('.bi-share-fill')
     }
 
+    public getHeartButtonByRandomTitle(
+      randomTitle: string
+    ): Locator {
+      return this.page
+        .locator('.oxd-sheet')
+        .filter({hasText:randomTitle})
+        .locator('svg')
+    }
+
+    public getCommentPostButtonByRandomTitle(
+      randomTitle: string
+    ): Locator {
+      return this.page
+        .locator('.oxd-sheet')
+        .filter({hasText:randomTitle})
+        .locator('.bi-chat-text-fill')
+    }
 
     public getPostWithRandomTitleAndPhoto(
       randomTitle: string
@@ -50,6 +138,11 @@ export class BuzzPage extends BasePage {
         .locator('.orangehrm-buzz-post-body-text')
     }
 
+    // public getPostWithRandomTitleAndPhoto(randomTitle: string): Locator {
+    //   return this.page.locator(`.orangehrm-buzz-post-body:has(:text('${randomTitle}')):has(.orangehrm-buzz-photos) .orangehrm-buzz-post-body-text`);
+    // }
+    // this also works, let's keep it in codebase for poor times
+
     public getOriginalTextOfReSharedPostWithPhoto(
       randomTitle: string
     ): Locator {
@@ -59,7 +152,6 @@ export class BuzzPage extends BasePage {
         .filter({has: this.page.locator('.orangehrm-buzz-photos')})
         .locator('.orangehrm-buzz-post-body-original-text')
     }
-
     
     public getPostWithRandomTitleWithoutPhoto(
       randomTitle: string
@@ -75,17 +167,16 @@ export class BuzzPage extends BasePage {
     // }
     // this also works, let's keep it in codebase for poor times
 
-
-    async sharePost(filePath:string, title:string): Promise<void> {
-        await this.sharePhotosButton.click();
-        await this.shareVideoParagraph.type(title)
-        const fileInput =  this.fileInputButton;
+    async sharePostWithPhoto(filePath:string, title:string): Promise<void> {
+        await this.getSharePhotoButton().click();
+        await this.getShareVideoTitle().type(title)
+        const fileInput =  this.getFileInputButton();
         if (!fileInput) {
           console.error('File input element not found.');
           return;
         }
         await fileInput.setInputFiles(filePath);
-        await this.sharingSubmitButton.click({force:true});
+        await this.getSharingSubmitButton().click({force:true});
     }
 
     async shareVideo(title:string, videoUrl:string): Promise<void> {
@@ -93,11 +184,11 @@ export class BuzzPage extends BasePage {
         return request.url().startsWith('https://jnn-pa.googleapis.com') && request.url().endsWith('/GenerateIT');
       };
       await this.page.waitForLoadState('networkidle', { timeout: 7000 })
-      await this.shareVideoButton.click();
-      await this.shareVideoParagraph.type(title)
-      await this.pasteUrlTextarea.type(videoUrl)
+      await this.getShareVideoButton().click();
+      await this.getShareVideoTitle().type(title)
+      await this.getVideoUrlTextarea().type(videoUrl)
       await this.page.waitForRequest(generateIt)
-      await this.sharingSubmitButton.click()
+      await this.getSharingSubmitButton().click()
       await this.page.waitForRequest(generateIt)
   }
 
@@ -111,27 +202,26 @@ export class BuzzPage extends BasePage {
         else {
           await this.page.waitForTimeout(1500)
         }
-        await this.threeDotsIcon.first().click({force:true})
-        await this.deletePostParagraphButton.click();
-        await this.confirmDeleteButton.click();
+        await this.getThreeDotsButton().first().dblclick({force:true})
+        await this.getDletePostButton().click();
+        await this.getConfirmDeleteButton().click();
     }
 
    async editTheNewestPost(finalPostText: string): Promise<void> {
-      await this.threeDotsIcon.first().click()
-      await this.editPostParagraphButton.click();
-      await this.inpostEditTextField.clear()
-      await this.inpostEditTextField.fill(finalPostText)
-      await this.confirmEditedPostButton.click()  
+      await this.getThreeDotsButton().first().click()
+      await this.getEditButton().click();
+      await this.getPostEditTextarea().fill(finalPostText)
+      await this.getConfirmEditedPostButton().click()  
   }
 
   async sendSimplePost(simplePostMessage:string): Promise<void> {
-    await this.simplePostMessageInput.type(simplePostMessage)
-    await this.submitSimplePostButton.click()
+    await this.getPostMessageInput().type(simplePostMessage)
+    await this.getSubmitSimplePostButton().click()
  }
 
-  async resharePostOfOther(oldTitle:string, newTitle:string): Promise<void> {
+  async reshareOtherPost(oldTitle:string, newTitle:string): Promise<void> {
     await this.getResharedPostButtonByRandomTitle(oldTitle).click()
-    await this.shareVideoParagraph.type(newTitle)
-    await this.sharingSubmitButton.click()
+    await this.getShareVideoTitle().type(newTitle)
+    await this.getSharingSubmitButton().click()
   }
 }
