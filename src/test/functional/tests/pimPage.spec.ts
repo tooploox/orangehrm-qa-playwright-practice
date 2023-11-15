@@ -8,10 +8,10 @@ import { newEmployeeTestData } from "../data";
 
 async function tableCellsGotByName(page: Page) {
   const pimPage = new PimPage(page);
-  const adminUserCell = await pimPage.getCellByRandomNewEmplyeeName(
+  const adminUserCell = await pimPage.getCellByEmployeeName(
     adminUserTestData.userName.slice(0, adminUserTestData.userName.indexOf(" "))
   );
-  const normalUserCell = await pimPage.getCellByRandomNewEmplyeeName(
+  const normalUserCell = await pimPage.getCellByEmployeeName(
     normalUserTestData.userName.slice(
       0,
       normalUserTestData.userName.indexOf(" ")
@@ -23,11 +23,11 @@ async function tableCellsGotByName(page: Page) {
 test.describe("Admin user should be able to manage on pim page", () => {
   let loginPage: LoginPage;
   let pimPage: PimPage;
-  const randomNewEmployeeName = generateRandomString(3);
-  const randomNewEmployeeNameForEditing = generateRandomString(3);
-  const randomEditedEmployeeName = generateRandomString(3) + "Edited";
-  const randomNameForMultiplyDelete1 = generateRandomString(3);
-  const randomNameForMultipluDelete2 = generateRandomString(3);
+  const newEmployeeName = generateRandomString(3);
+  const newEmployeeNameForEditing = generateRandomString(3);
+  const editedEmployeeName = generateRandomString(3) + "Edited";
+  const nameForMultiplyDelete1 = generateRandomString(3);
+  const nameForMultipluDelete2 = generateRandomString(3);
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
@@ -43,52 +43,52 @@ test.describe("Admin user should be able to manage on pim page", () => {
 
   test("Admin user should add employee", async ({ page }) => {
     await pimPage.addEmployee(
-      newEmployeeTestData.firstName + randomNewEmployeeName
+      newEmployeeTestData.firstName + newEmployeeName
     );
     await pimPage.navigateToSubPage(SubPage.PIM);
     await page.waitForLoadState("networkidle");
     await expect(
-      pimPage.getCellByRandomNewEmplyeeName(randomNewEmployeeName)
+      pimPage.getCellByEmployeeName(newEmployeeName)
     ).toBeVisible();
   });
 
-  test("Admin user should edit previousely created employee with random name", async ({
+  test("Admin user should edit previousely created employee with dynamically created name", async ({
     page,
   }) => {
     await pimPage.addEmployee(
-      newEmployeeTestData.firstName + randomNewEmployeeNameForEditing
+      newEmployeeTestData.firstName + newEmployeeNameForEditing
     );
     await pimPage.navigateToSubPage(SubPage.PIM);
     await pimPage
-      .getEditIconByRandomEmployeeName(randomNewEmployeeNameForEditing)
+      .getEditIconByEmployeeName(newEmployeeNameForEditing)
       .click();
-    await pimPage.editEmployee(randomEditedEmployeeName);
+    await pimPage.editEmployee(editedEmployeeName);
     await pimPage.navigateToSubPage(SubPage.PIM);
     await page.waitForLoadState("networkidle");
     await expect(
-      pimPage.getCellByRandomNewEmplyeeName(randomEditedEmployeeName)
+      pimPage.getCellByEmployeeName(editedEmployeeName)
     ).toBeVisible();
   });
 
   test("Delete mulitiply users", async ({ page }) => {
     await pimPage.addEmployee(
-      newEmployeeTestData.firstName + randomNameForMultiplyDelete1
+      newEmployeeTestData.firstName + nameForMultiplyDelete1
     );
     await pimPage.navigateToSubPage(SubPage.PIM);
     await pimPage.addEmployee(
-      newEmployeeTestData.firstName + randomNameForMultipluDelete2
+      newEmployeeTestData.firstName + nameForMultipluDelete2
     );
     await pimPage.navigateToSubPage(SubPage.PIM);
     await pimPage
-      .getCheckIconByRandomEmployeeName(randomNameForMultiplyDelete1)
+      .getCheckIconByEmployeeName(nameForMultiplyDelete1)
       .click();
     await pimPage
-      .getCheckIconByRandomEmployeeName(randomNameForMultipluDelete2)
+      .getCheckIconByEmployeeName(nameForMultipluDelete2)
       .click();
     await pimPage.getMultiplyDeleteButton().click();
     await pimPage.getConfirmDeleteButton().click();
-    await expect(pimPage.getCheckIconByRandomEmployeeName(randomNameForMultiplyDelete1)).toHaveCount(0);
-    await expect(pimPage.getCheckIconByRandomEmployeeName(randomNameForMultipluDelete2)).toHaveCount(0);
+    await expect(pimPage.getCheckIconByEmployeeName(nameForMultiplyDelete1)).toHaveCount(0);
+    await expect(pimPage.getCheckIconByEmployeeName(nameForMultipluDelete2)).toHaveCount(0);
   });
 
   test('User should search for employee by name', async ({ page }) => {
@@ -136,51 +136,51 @@ test.describe("Admin user should be able to manage on pim page", () => {
   }) => {
     const pimPage = new PimPage(page);
     await pimPage
-      .getTrashBinByRandomEmployeeName(randomNewEmployeeName)
+      .getTrashBinByEmployeeName(newEmployeeName)
       .click();
     await pimPage.getConfirmDeleteButton().click();
     await pimPage
-      .getTrashBinByRandomEmployeeName(randomEditedEmployeeName)
+      .getTrashBinByEmployeeName(editedEmployeeName)
       .click();
     await pimPage.getConfirmDeleteButton().click();
     await expect(
-      pimPage.getTrashBinByRandomEmployeeName(randomNewEmployeeName)
+      pimPage.getTrashBinByEmployeeName(newEmployeeName)
     ).toHaveCount(0);
     await expect(
-      pimPage.getTrashBinByRandomEmployeeName(randomEditedEmployeeName)
+      pimPage.getTrashBinByEmployeeName(editedEmployeeName)
     ).toHaveCount(0);
   });
 
   test('Admin user should add employee from sub page: Add employee', async ({ page }) => {
-    const randomNewEmployeeName = generateRandomString(3);
-    const firstName = newEmployeeTestData.firstName + randomNewEmployeeName
+    const newEmployeeName = generateRandomString(3);
+    const firstName = newEmployeeTestData.firstName + newEmployeeName
     await pimPage.addEmployee(firstName, true);
     await pimPage.navigateToSubPage(SubPage.PIM);
     await page.waitForLoadState('networkidle')
-    await expect((pimPage.getCellByRandomNewEmplyeeName(randomNewEmployeeName))).toBeVisible();
+    await expect((pimPage.getCellByEmployeeName(newEmployeeName))).toBeVisible();
   });
 
   test('Admin user should add employee from sub page "Add employee" with loging details', async ({ page }) => {
-    const randomNewEmployeeName = generateRandomString(3);
-    const firstName = newEmployeeTestData.firstName + randomNewEmployeeName
-    const fullName = newEmployeeTestData.firstName + randomNewEmployeeName + ' ' + newEmployeeTestData.lastName
+    const newEmployeeName = generateRandomString(3);
+    const firstName = newEmployeeTestData.firstName + newEmployeeName
+    const fullName = newEmployeeTestData.firstName + newEmployeeName + ' ' + newEmployeeTestData.lastName
     const messagestUrl = 'http://localhost:8888/web/index.php/core/i18n/messages'
     await pimPage.addEmployeeWithLoginDetails(firstName, true);
     await page.waitForRequest(messagestUrl)
     await pimPage.logOut()
     await pimPage.loginUser(firstName, adminUserTestData.password )
-    await expect(loginPage.chooseDropdownOptionByText(randomNewEmployeeName)).toHaveText(fullName);
+    await expect(loginPage.chooseDropdownOptionByText(newEmployeeName)).toHaveText(fullName);
   });
 
   test('Admin user should add employee with loging details', async ({ page }) => {
-    const randomNewEmployeeName = generateRandomString(3);
-    const firstName = newEmployeeTestData.firstName + randomNewEmployeeName
-    const fullName = newEmployeeTestData.firstName + randomNewEmployeeName + ' ' + newEmployeeTestData.lastName
+    const newEmployeeName = generateRandomString(3);
+    const firstName = newEmployeeTestData.firstName + newEmployeeName
+    const fullName = newEmployeeTestData.firstName + newEmployeeName + ' ' + newEmployeeTestData.lastName
     const messagestUrl = 'http://localhost:8888/web/index.php/core/i18n/messages'
     await pimPage.addEmployeeWithLoginDetails(firstName);
     await page.waitForRequest(messagestUrl)
     await pimPage.logOut()
     await pimPage.loginUser(firstName, adminUserTestData.password )
-    await expect(loginPage.chooseDropdownOptionByText(randomNewEmployeeName)).toHaveText(fullName);
+    await expect(loginPage.chooseDropdownOptionByText(newEmployeeName)).toHaveText(fullName);
   })
 });

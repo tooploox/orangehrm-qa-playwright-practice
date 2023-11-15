@@ -73,55 +73,56 @@ export class PimPage extends BasePage {
       });
     }
 
-  // public getLocatorByRandomNewEmplyeeName(randomNewEmpoyeeName: string):Locator {
-  //   return this.page.locator(`.oxd-table-cell:has(:text("${randomNewEmpoyeeName}"))`);
-  // } this also works, let's keep it in codebase for poor times
+  // public getCellByEmployeeName(employeeName: string):Locator {
+  //   return this.page.locator(`.oxd-table-cell:has(:text("${employeeName}"))`);
+  // } 
+  //this also works, let's keep it in codebase for poor times
   
-  public getCellByRandomNewEmplyeeName(
-    randomNewEmployeeName: string
+  public getCellByEmployeeName(
+    employeeName: string
   ): Locator {
     return this.page
-    .getByRole('cell', {name: randomNewEmployeeName})
+    .getByRole('cell', {name: employeeName})
   }
 
-  // public getTrashBinByRandomEmployeeName(randomNewEmployeeName: string):Locator {
-  //   return this.page.locator(`.oxd-table-card:has(:text("${randomNewEmployeeName}")) .oxd-icon.bi-trash`);
+  // public getTrashBinByEmployeeName(employeeName: string):Locator {
+  //   return this.page.locator(`.oxd-table-card:has(:text("${employeeName}")) .oxd-icon.bi-trash`);
   // } 
   // this also works, let's keep it in codebase for poor times
 
-  public getTrashBinByRandomEmployeeName(
-    randomNewEmployeeName: string
+  public getTrashBinByEmployeeName(
+    employeeName: string
   ): Locator {
     return this.page
-      .getByText(randomNewEmployeeName)
+      .getByText(employeeName)
       .locator("xpath=../..")
       .getByRole("button")
       .locator(".bi-trash");
   }
 
-  // public  getEditIconByRandomEmployeeName(randomNewEmpoyeeName: string): Locator {
-  //   return this.page.locator( `.oxd-table-card:has(:text("${randomNewEmpoyeeName}")) .oxd-icon.bi-pencil-fill`);
+  // public  getEditIconByEmployeeName(employeeName: string): Locator {
+  //   return this.page.locator( `.oxd-table-card:has(:text("${employeeName}")) .oxd-icon.bi-pencil-fill`);
   // } 
   //this also works, let's keep it in codebase for poor times
 
-  public getEditIconByRandomEmployeeName(randomNewEmployeeName: string): Locator {
+  public getEditIconByEmployeeName(employeeName: string): Locator {
     return this.page
-    .getByText(randomNewEmployeeName)
+    .getByText(employeeName)
     .locator('xpath=../..')
     .getByRole('button')
     .locator('.bi-pencil-fill')
   }
 
-  // public  getCheckIconByRandomEmployeeName(randomNewEmpoyeeName: string):Locator {
-  //   return this.page.locator(`.oxd-table-card:has(:text("${randomNewEmpoyeeName}")) .oxd-checkbox-input-icon`);
+  // public  getCheckIconByEmployeeName(employeeName: string):Locator {
+  //   return this.page.locator(`.oxd-table-card:has(:text("${employeeName}")) .oxd-checkbox-input-icon`);
   // } 
   // this also works, let's keep it in codebase for poor times
 
-  public getCheckIconByRandomEmployeeName(
-    randomNewEmployeeName: string
+  public getCheckIconByEmployeeName(
+    employeeName: string
   ): Locator {
     return this.page
-      .getByText(randomNewEmployeeName)
+      .getByText(employeeName)
       .locator("xpath=../..")
       .locator("span")
   }
@@ -133,20 +134,20 @@ export class PimPage extends BasePage {
       .locator("input");
   }
 
-  public async addEmployee(firstRandomName: string, bySubtab?: boolean) {
+  public async addEmployee(firstName: string, bySubtab?: boolean) {
     if (bySubtab) {
       await this.navigateToSubPage(SubPage.ADD_EMPLOYEE);
     } else {
       await this.getAddEmployeeButtonn().click();
     }
-    await this.getFirstNameInput().type(firstRandomName);
+    await this.getFirstNameInput().type(firstName);
     await this.getMiddleNameInput().type(newEmployeeTestData.middleName);
     await this.getLastNameInput().type(newEmployeeTestData.lastName);
     await this.getSaveUserButton().click();
   }
 
   public async addEmployeeWithLoginDetails(
-    firstRandomName: string,
+    firstName: string,
     bySubtab?: boolean
   ) {
     if (bySubtab) {
@@ -154,19 +155,19 @@ export class PimPage extends BasePage {
     } else {
       await this.getAddEmployeeButtonn().click();
     }
-    await this.getFirstNameInput().type(firstRandomName);
+    await this.getFirstNameInput().type(firstName);
     await this.getMiddleNameInput().type(newEmployeeTestData.middleName);
     await this.getLastNameInput().type(newEmployeeTestData.lastName);
     await this.getToggleByTextLabel(Label.LOGIN_DETAILS).click();
-    await this.getInputByLabelText(Label.USERNAME).type(firstRandomName);
+    await this.getInputByLabelText(Label.USERNAME).type(firstName);
     await this.getInputByLabelText(Label.PASSWORD).type(adminUserTestData.password);
     await this.getInputByLabelText(Label.CONFIRM_PASSWORD).type(adminUserTestData.password);
     await this.getSaveButtonByHeadingSection(SubPage.ADD_EMPLOYEE).click();
   }
 
-  public async editEmployee(randomEditedEmployeeName: string) {
+  public async editEmployee(newEmployeeName: string) {
     await this.page.waitForLoadState("load");
-    await this.getFirstNameInput().fill(randomEditedEmployeeName);
+    await this.getFirstNameInput().fill(newEmployeeName);
     await this.getSaveUserButton().click();
   }
 

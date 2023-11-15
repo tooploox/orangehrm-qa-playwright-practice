@@ -41,20 +41,20 @@ test.describe('Share, edit and delete post', () => {
   });
 
   test('Post should be shared', async ({ page }) => {
-    const randomTitle = generateRandomString(8);
+    const title = generateRandomString(8);
     await buzzPage.navigateToSubPage(SubPage.BUZZ);
-    await buzzPage.sharePostWithPhoto(filePath, randomTitle);
+    await buzzPage.sharePostWithPhoto(filePath, title);
     await page.reload();
-    await expect(buzzPage.getPostWithRandomTitleAndPhoto(randomTitle)).toBeVisible();
+    await expect(buzzPage.getPostWithTitleAndPhoto(title)).toBeVisible();
   });
 
   test('Post should be edited', async ({ page }) => {
-    const randomTitle = generateRandomString(8);
+    const title = generateRandomString(8);
     await buzzPage.navigateToSubPage(SubPage.BUZZ);
-    await buzzPage.sharePostWithPhoto(filePath, randomTitle);
+    await buzzPage.sharePostWithPhoto(filePath, title);
     await page.reload();
     await buzzPage.editTheNewestPost(expectedPostTextAfterEdition);
-    await expect(buzzPage.getPostWithRandomTitleAndPhoto(expectedPostTextAfterEdition)).toBeVisible();
+    await expect(buzzPage.getPostWithTitleAndPhoto(expectedPostTextAfterEdition)).toBeVisible();
   });
 });
 
@@ -86,14 +86,14 @@ test.describe('Most liked and most commented post', () => {
   });
 
   test('User should upload 3 videos and verify if most liked is on 1st position in most liked tab', async ({ page }) => {
-    await buzzPage.getHeartButtonByRandomTitle(mostLiked).click()
+    await buzzPage.getHeartButtonByTitle(mostLiked).click()
     await buzzPage.getMostLikedTab().click();
     await expect(buzzPage.getTextPostBody().first()).toHaveText(mostLiked);
     await expect(buzzPage.getVideoBody()).toHaveCount(3);
   });
 
-  test('User should upload 3 videos and verify if most commented is on 1st position in most commented tab', async ({ page }) => {
-    await buzzPage.getCommentPostButtonByRandomTitle(mostCommented).click()
+  test.only('User should upload 3 videos and verify if most commented is on 1st position in most commented tab', async ({ page }) => {
+    await buzzPage.getCommentPostButtonByTitle(mostCommented).click()
     await buzzPage.getCommentInput(mostCommented).type(newComment);
     await page.keyboard.press('Enter');
     await buzzPage.getMostCommentedTab().click();
@@ -129,16 +129,16 @@ test.describe('User should be able to write and share post', () => {
   test('User shoud be able to write simple post', async ({ page }) => {
     await buzzPage.sendSimplePost(simplePostMessage)
     await page.reload();
-    await expect(buzzPage.getPostWithRandomTitleWithoutPhoto(simplePostMessage)).toBeVisible();
+    await expect(buzzPage.getPostWithTitleWithoutPhoto(simplePostMessage)).toBeVisible();
   });
 
   test('User should be able to share post of other', async ({ page }) => {
-    const randomTitle = generateRandomString(8);
-    const randomTitleForSharedPost = generateRandomString(8)
-    await buzzPage.sharePostWithPhoto(filePath, randomTitle);
+    const title = generateRandomString(8);
+    const titleForReSharedPost = generateRandomString(8)
+    await buzzPage.sharePostWithPhoto(filePath, title);
     await page.reload();
-    await buzzPage.reshareOtherPost(randomTitle, randomTitleForSharedPost)
-    await expect(buzzPage.getPostWithRandomTitleAndPhoto(randomTitleForSharedPost)).toBeVisible();
-    await expect(buzzPage.getOriginalTextOfReSharedPostWithPhoto(randomTitle)).toBeVisible();
+    await buzzPage.reshareOtherPost(title, titleForReSharedPost)
+    await expect(buzzPage.getPostWithTitleAndPhoto(titleForReSharedPost)).toBeVisible();
+    await expect(buzzPage.getOriginalTextOfReSharedPostWithPhoto(title)).toBeVisible();
   });
 });

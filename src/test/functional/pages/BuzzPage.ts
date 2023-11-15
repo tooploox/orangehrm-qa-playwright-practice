@@ -101,69 +101,69 @@ export class BuzzPage extends BasePage {
         .getByPlaceholder(Label.WRITE_YOUR_COMMENT)
     }
 
-    public getResharedPostButtonByRandomTitle(
-      randomTitle: string
+    public getResharedPostButtonByTitle(
+      title: string
     ): Locator {
       return this.page
         .locator('.oxd-sheet')
-        .filter({hasText:randomTitle})
+        .filter({hasText:title})
         .locator('.bi-share-fill')
     }
 
-    public getHeartButtonByRandomTitle(
-      randomTitle: string
+    public getHeartButtonByTitle(
+      title: string
     ): Locator {
       return this.page
         .locator('.oxd-sheet')
-        .filter({hasText:randomTitle})
+        .filter({hasText:title})
         .locator('svg')
     }
 
-    public getCommentPostButtonByRandomTitle(
-      randomTitle: string
+    public getCommentPostButtonByTitle(
+      title: string
     ): Locator {
       return this.page
         .locator('.oxd-sheet')
-        .filter({hasText:randomTitle})
+        .filter({hasText:title})
         .locator('.bi-chat-text-fill')
     }
 
-    public getPostWithRandomTitleAndPhoto(
-      randomTitle: string
+    public getPostWithTitleAndPhoto(
+      title: string
     ): Locator {
       return this.page
         .locator('.orangehrm-buzz-post-body')
-        .filter({hasText:randomTitle})
+        .filter({hasText:title})
         .filter({has: this.page.locator('.orangehrm-buzz-photos')})
         .locator('.orangehrm-buzz-post-body-text')
     }
 
-    // public getPostWithRandomTitleAndPhoto(randomTitle: string): Locator {
-    //   return this.page.locator(`.orangehrm-buzz-post-body:has(:text('${randomTitle}')):has(.orangehrm-buzz-photos) .orangehrm-buzz-post-body-text`);
+    // public getPostWithTitleAndPhoto(title: string): Locator {
+    //   return this.page.locator(`.orangehrm-buzz-post-body:has(:text('${title}')):has(.orangehrm-buzz-photos) .orangehrm-buzz-post-body-text`);
     // }
     // this also works, let's keep it in codebase for poor times
 
     public getOriginalTextOfReSharedPostWithPhoto(
-      randomTitle: string
+      title: string
     ): Locator {
       return this.page
         .locator('.orangehrm-buzz-post-body')
-        .filter({hasText:randomTitle})
+        .filter({hasText:title})
         .filter({has: this.page.locator('.orangehrm-buzz-photos')})
         .locator('.orangehrm-buzz-post-body-original-text')
     }
     
-    public getPostWithRandomTitleWithoutPhoto(
-      randomTitle: string
+    public getPostWithTitleWithoutPhoto(
+      title: string
     ): Locator {
       return this.page
         .locator('.orangehrm-buzz-post-body')
-        .filter({hasText:randomTitle})
+        .filter({hasText:title})
         .locator('.orangehrm-buzz-post-body-text')
     }
 
-    // public getPostWithRandomTitleWithoutPhoto(randomTitle: string): Locator {
-    //   return this.page.locator(`.orangehrm-buzz-post-body:has(:text("${randomTitle}")) .orangehrm-buzz-post-body-text`);
+    // public getPostWithTitleWithoutPhoto(title: string): Locator {
+    //   return this.page.locator(`.orangehrm-buzz-post-body:has(:text("${title}")) .orangehrm-buzz-post-body-text`);
     // }
     // this also works, let's keep it in codebase for poor times
 
@@ -220,7 +220,7 @@ export class BuzzPage extends BasePage {
  }
 
   async reshareOtherPost(oldTitle:string, newTitle:string): Promise<void> {
-    await this.getResharedPostButtonByRandomTitle(oldTitle).click()
+    await this.getResharedPostButtonByTitle(oldTitle).click()
     await this.getShareVideoTitle().type(newTitle)
     await this.getSharingSubmitButton().click()
   }
