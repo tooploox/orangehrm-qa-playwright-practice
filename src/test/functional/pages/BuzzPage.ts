@@ -1,15 +1,15 @@
-import { BasePage, Labels } from './BasePage';
+import { BasePage, Label } from './BasePage';
 import { Locator } from "@playwright/test";
 export class BuzzPage extends BasePage {
  
     public getMostLikedTab(
       ): Locator {
-        return this.page.getByRole('button', { name: Labels.MOST_LIKED_POST })
+        return this.page.getByRole('button', { name: Label.MOST_LIKED_POST })
       }
     
     public getMostCommentedTab(
       ): Locator {
-        return this.page.getByRole('button', { name: Labels.MOST_COMMENTED_POST})
+        return this.page.getByRole('button', { name: Label.MOST_COMMENTED_POST})
       }
     
     public getTextPostBody(
@@ -24,32 +24,32 @@ export class BuzzPage extends BasePage {
 
     protected getSubmitSimplePostButton(
       ): Locator {
-        return this.page.getByRole('button', { name: Labels.POST, exact: true })
+        return this.page.getByRole('button', { name: Label.POST, exact: true })
       }
 
     protected getPostMessageInput(
       ): Locator {
-        return this.page.getByPlaceholder(Labels.WHAT_ON_YOUR_MIND)
+        return this.page.getByPlaceholder(Label.WHAT_ON_YOUR_MIND)
       }
     
     protected getShareVideoTitle(
       ): Locator {
-        return this.page.getByRole('dialog').getByPlaceholder(Labels.WHAT_ON_YOUR_MIND)
+        return this.page.getByRole('dialog').getByPlaceholder(Label.WHAT_ON_YOUR_MIND)
       }
     
     protected getVideoUrlTextarea(
       ): Locator {
-        return this.page.getByPlaceholder(Labels.PASTE_VIDEO_URL)
+        return this.page.getByPlaceholder(Label.PASTE_VIDEO_URL)
       }
     
     protected getShareVideoButton(
       ): Locator {
-        return this.page.getByRole('button', { name: Labels.SHARE_VIDEO })
+        return this.page.getByRole('button', { name: Label.SHARE_VIDEO })
       }
     
     protected getConfirmEditedPostButton(
       ): Locator {
-        return this.page.getByRole('dialog').getByRole('button', { name: Labels.POST })
+        return this.page.getByRole('dialog').getByRole('button', { name: Label.POST })
       }
     
     protected getPostEditTextarea(
@@ -59,17 +59,17 @@ export class BuzzPage extends BasePage {
     
     protected getConfirmDeleteButton(
       ): Locator {
-        return this.page.getByRole('button', { name: Labels.YES_DELETE});
+        return this.page.getByRole('button', { name: Label.YES_DELETE});
       }
     
     protected getEditButton(
       ): Locator {
-        return this.page.getByText(Labels.EDIT_POST);
+        return this.page.getByText(Label.EDIT_POST);
       }
 
-    protected getDletePostButton(
+    protected getDeletePostButton(
       ): Locator {
-        return this.page.getByText(Labels.DELETE_POST);
+        return this.page.getByText(Label.DELETE_POST);
       }
 
     public getThreeDotsButton(
@@ -79,7 +79,7 @@ export class BuzzPage extends BasePage {
 
     public getSharingSubmitButton(
       ): Locator {
-        return this.page.getByRole('button', { name: Labels.SHARE, exact: true })
+        return this.page.getByRole('button', { name: Label.SHARE, exact: true })
       }
 
     protected getFileInputButton(
@@ -89,16 +89,16 @@ export class BuzzPage extends BasePage {
 
     protected getSharePhotoButton(
     ): Locator {
-      return this.page.getByRole('button', { name: Labels.SHARE_PHOTOS })
+      return this.page.getByRole('button', { name: Label.SHARE_PHOTOS })
     }
 
     public getCommentInput(
-      randomTitle: string
+      title: string
     ): Locator {
       return this.page
         .locator('.oxd-sheet')
-        .filter({hasText:randomTitle})
-        .getByPlaceholder(Labels.WRITE_YOUR_COMMENT)
+        .filter({hasText:title})
+        .getByPlaceholder(Label.WRITE_YOUR_COMMENT)
     }
 
     public getResharedPostButtonByRandomTitle(
@@ -203,7 +203,7 @@ export class BuzzPage extends BasePage {
           await this.page.waitForTimeout(1500)
         }
         await this.getThreeDotsButton().first().dblclick({force:true})
-        await this.getDletePostButton().click();
+        await this.getDeletePostButton().click();
         await this.getConfirmDeleteButton().click();
     }
 

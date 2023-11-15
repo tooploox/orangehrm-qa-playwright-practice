@@ -1,4 +1,4 @@
-import { BasePage, SubPage, Labels } from "./BasePage";
+import { BasePage, SubPage, Label } from "./BasePage";
 import { adminUserTestData, newEmployeeTestData } from "../data";
 import { Locator } from "@playwright/test";
 
@@ -7,50 +7,50 @@ export class PimPage extends BasePage {
   protected getAddEmployeeButtonn(
     ): Locator {
       return this.page.getByRole("button", {
-        name: Labels.ADD,
+        name: Label.ADD,
       });
     }
 
   protected getFirstNameInput(
     ): Locator {
-      return  this.page.getByPlaceholder(Labels.FIRST_NAME);
+      return  this.page.getByPlaceholder(Label.FIRST_NAME);
     }
 
   protected getMiddleNameInput(
     ): Locator {
-      return  this.page.getByPlaceholder(Labels.MIDDLE_NAME);
+      return  this.page.getByPlaceholder(Label.MIDDLE_NAME);
     }
 
   protected getLastNameInput(
     ): Locator {
-      return  this.page.getByPlaceholder(Labels.LAST_NAME);
+      return  this.page.getByPlaceholder(Label.LAST_NAME);
     }
 
   protected getSaveUserButton(
     ): Locator {
       return  this.page.getByRole("button", {
-        name: Labels.SAVE,
+        name: Label.SAVE,
       });    
     }
 
   public getConfirmDeleteButton(
     ): Locator {
       return  this.page.getByRole("button", {
-        name: Labels.YES_DELETE,
+        name: Label.YES_DELETE,
       });
     }
 
   public getMultiplyDeleteButton(
     ): Locator {
       return  this.page.getByRole("button", {
-        name: Labels.DELETE_SELECTED,
+        name: Label.DELETE_SELECTED,
       });
     }
   
   protected getEmployeeNameInput(
     ): Locator {
       return  this.page
-      .getByPlaceholder(Labels.TYPE_FOR_HINTS)
+      .getByPlaceholder(Label.TYPE_FOR_HINTS)
       .first();
     }
 
@@ -62,14 +62,14 @@ export class PimPage extends BasePage {
   protected getSearchEmployeeButton(
     ): Locator {
       return  this.page.getByRole("button", {
-        name: Labels.SEARCH,
+        name: Label.SEARCH,
       });
     }
 
   public getResetButton(
     ): Locator {
       return  this.page.getByRole("button", {
-        name: Labels.RESET,
+        name: Label.RESET,
       });
     }
 
@@ -133,8 +133,8 @@ export class PimPage extends BasePage {
       .locator("input");
   }
 
-  public async addEmployee(firstRandomName: string, bySubtub?: boolean | null) {
-    if (bySubtub === true) {
+  public async addEmployee(firstRandomName: string, bySubtab?: boolean) {
+    if (bySubtab) {
       await this.navigateToSubPage(SubPage.ADD_EMPLOYEE);
     } else {
       await this.getAddEmployeeButtonn().click();
@@ -147,9 +147,9 @@ export class PimPage extends BasePage {
 
   public async addEmployeeWithLoginDetails(
     firstRandomName: string,
-    bySubtub?: boolean | null
+    bySubtab?: boolean
   ) {
-    if (bySubtub === true) {
+    if (bySubtab) {
       await this.navigateToSubPage(SubPage.ADD_EMPLOYEE);
     } else {
       await this.getAddEmployeeButtonn().click();
@@ -157,10 +157,10 @@ export class PimPage extends BasePage {
     await this.getFirstNameInput().type(firstRandomName);
     await this.getMiddleNameInput().type(newEmployeeTestData.middleName);
     await this.getLastNameInput().type(newEmployeeTestData.lastName);
-    await this.getToggleByTextLabel(Labels.LOGIN_DETAILS).click();
-    await this.getInputByLabelText(Labels.USERNAME).type(firstRandomName);
-    await this.getInputByLabelText(Labels.PASSWORD).type(adminUserTestData.password);
-    await this.getInputByLabelText(Labels.CONFIRM_PASSWORD).type(adminUserTestData.password);
+    await this.getToggleByTextLabel(Label.LOGIN_DETAILS).click();
+    await this.getInputByLabelText(Label.USERNAME).type(firstRandomName);
+    await this.getInputByLabelText(Label.PASSWORD).type(adminUserTestData.password);
+    await this.getInputByLabelText(Label.CONFIRM_PASSWORD).type(adminUserTestData.password);
     await this.getSaveButtonByHeadingSection(SubPage.ADD_EMPLOYEE).click();
   }
 

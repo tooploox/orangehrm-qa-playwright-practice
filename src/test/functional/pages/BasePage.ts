@@ -68,7 +68,7 @@ export class BasePage {
     return this.page
       .getByRole('heading', { name: heading })
       .locator('xpath=..')
-      .getByRole('button', { name: Labels.SAVE })
+      .getByRole('button', { name: Label.SAVE })
   }
 
   protected getSpanByText(text: string): Locator {
@@ -84,15 +84,15 @@ export class BasePage {
   }
 
   protected getUsernameInput(): Locator {  
-    return this.page.getByPlaceholder(Labels.USERNAME);
+    return this.page.getByPlaceholder(Label.USERNAME);
   }
 
   protected getPasswordInput(): Locator {  
-    return this.page.getByPlaceholder(Labels.PASSWORD);
+    return this.page.getByPlaceholder(Label.PASSWORD);
   }
   
   protected getLoginButton(): Locator {
-    return this.page.getByRole('button', { name: Labels.LOGIN });
+    return this.page.getByRole('button', { name: Label.LOGIN });
   }
 
   async loginUser(mail: string, password: string): Promise<void> {
@@ -103,7 +103,7 @@ export class BasePage {
 
 public async logOut(){
   await this.getSpanByText('Admin User').click()
-  await this.getMenuItemByText(Labels.LOGOUT).click()
+  await this.getMenuItemByText(Label.LOGOUT).click()
 }
 
 
@@ -125,7 +125,7 @@ public async logOut(){
     ADD_EMPLOYEE = 'Add Employee'
   }
 
-  export enum Labels {
+  export enum Label {
     USERNAME = 'Username',
     PASSWORD = 'Password',
     CONFIRM_PASSWORD = 'Confirm Password',
