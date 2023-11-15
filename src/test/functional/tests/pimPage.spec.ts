@@ -5,6 +5,7 @@ import { adminUserTestData, normalUserTestData } from "../data";
 import { SubPage } from "../pages/BasePage";
 import { generateRandomString } from "../utils/helper";
 import { newEmployeeTestData } from "../data";
+import {getCurrentDayAsString} from "../utils/helper"
 
 async function tableCellsGotByName(page: Page) {
   const pimPage = new PimPage(page);
@@ -182,5 +183,28 @@ test.describe("Admin user should be able to manage on pim page", () => {
     await pimPage.logOut()
     await pimPage.loginUser(firstName, adminUserTestData.password )
     await expect(loginPage.chooseDropdownOptionByText(randomNewEmployeeName)).toHaveText(fullName);
+  })
+
+  test.only('Admin user should add the employee and complete his or her personal data', async ({ page }) => {
+    const randomNewEmployeeName = generateRandomString(3);
+    const firstName = newEmployeeTestData.firstName + randomNewEmployeeName
+    const fullName = newEmployeeTestData.firstName + randomNewEmployeeName + ' ' + newEmployeeTestData.lastName
+    const messagestUrl = 'http://localhost:8888/web/index.php/core/i18n/messages'
+    await pimPage.addEmployeeWithLoginDetails(firstName);
+    await page.waitForRequest(messagestUrl)
+    await page.waitForLoadState('networkidle')
+    await pimPage.getInputByLabelText('Other Id').type('OID1234#')
+    await pimPage.getInputByLabelText("Driver's License Number").type('DL1234#')
+    await pimPage.getDatePickerByTextLabel('License Expiry Date').click()
+    await page.getByText(getCurrentDayAsString()).click()
+    await pimPage.getDropdownByTextLabel('Nationality').click()
+    await pimPage.chooseDropdownOptionByText('Polish').click()
+    await pimPage.getDropdownByTextLabel('Marital Status').click()
+    await pimPage.chooseDropdownOptionByText('Single').click()
+    await pimPage.getDatePickerByTextLabel('Date of Birth').click()
+    await page.getByText(getCurrentDayAsString()).click()
+    await pimPage.getRadiobuttonByTextLabel('Male').click()
+    await pimPage.getSaveButtonByHeadingSection('Personal Details').click()
+    await page.waitForTimeout(10000)
   })
 });

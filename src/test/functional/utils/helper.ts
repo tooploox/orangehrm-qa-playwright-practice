@@ -7,4 +7,10 @@ export const generateRandomString = (n:number) => {
   
     return 'TestE2E' + randomString;
   };
+
+ export const getCurrentDayAsString = () => {
+    const currentDate = new Date();
+    const dayOfMonth = currentDate.getDate();
+    return dayOfMonth.toString();
+  }
   

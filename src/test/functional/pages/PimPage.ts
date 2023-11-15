@@ -133,6 +133,20 @@ export class PimPage extends BasePage {
       .locator("input");
   }
 
+  public getOtherIdInput(): Locator {
+    return this.page.getByText('Other Id')
+    .locator('xpath=../..')
+    .locator('input')
+  }
+
+  public getDrivingLicenseInput(): Locator {
+    return this.page.getByText("Driver's License Number")
+    .locator('xpath=../..')
+    .locator('input')
+  }
+
+
+
   public async addEmployee(firstRandomName: string, bySubtab?: boolean) {
     if (bySubtab) {
       await this.navigateToSubPage(SubPage.ADD_EMPLOYEE);

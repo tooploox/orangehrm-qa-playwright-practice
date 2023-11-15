@@ -28,6 +28,12 @@ export class BasePage {
     await this.page.getByRole('link', { name: subPage }).click();
   }
 
+  public getInputByTextLabel(textLabel:string): Locator {
+    return this.page.getByText(textLabel)
+    .locator('xpath=../..')
+    .locator('input')
+  }
+
   protected getTextboxByPlaceholder(placeholder: string): Locator {
     return this.page.getByPlaceholder(placeholder);
   }
@@ -41,10 +47,10 @@ export class BasePage {
   }
 
   public chooseDropdownOptionByText(option: string) {
-    return this.page.getByRole('banner').getByText(option)
+    return this.page.getByRole('listbox').getByText(option)
   }
 
-  protected getDatePickerByTextLabel(label: string): Locator {
+  public getDatePickerByTextLabel(label: string): Locator {
     return this.page
       .locator('form div')
       .filter({
@@ -53,11 +59,11 @@ export class BasePage {
       .getByPlaceholder('yyyy-mm-dd');
   }
 
-  protected getRadiobuttonByTextLabel(label: string): Locator {
+  public getRadiobuttonByTextLabel(label: string): Locator {
     return this.page.getByText(label, { exact: true }).locator('xpath=../..');
   }
 
-  protected getDropdownByTextLabel(label: string): Locator {
+  public getDropdownByTextLabel(label: string): Locator {
     return this.page
       .getByText(label, { exact: true })
       .locator('xpath=../..')
