@@ -92,7 +92,7 @@ test.describe('Most liked and most commented post', () => {
     await expect(buzzPage.getVideoBody()).toHaveCount(3);
   });
 
-  test.only('User should upload 3 videos and verify if most commented is on 1st position in most commented tab', async ({ page }) => {
+  test('User should upload 3 videos and verify if most commented is on 1st position in most commented tab', async ({ page }) => {
     await buzzPage.getCommentPostButtonByTitle(mostCommented).click()
     await buzzPage.getCommentInput(mostCommented).type(newComment);
     await page.keyboard.press('Enter');
